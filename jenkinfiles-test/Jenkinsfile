@@ -1,0 +1,137 @@
+Declarative Pipeline Syntax
+
+pipeline {
+    agent any
+    tools {
+        go 'go-1.17'
+    }
+
+    enviroment {
+        GO111MODULE='on'
+    }
+
+    stages {
+        stage('test') {
+            steps {
+                echo "hello world!"
+                git 'htpps://github.com/AdminTurnedDevOps/go-webapp-sample.git'
+                //sh 'go test ./...'
+            }
+
+        }
+
+        stage ('building our image') {
+            steps {
+                script {
+                    app = docker.build("adminturneddevopes/go-webapp-sample")
+                }
+            }
+        }
+
+        stage('Run') {
+            steps {
+                sh 'cd /var/lib/jenkins/workspace/go-full-pipeline && go-webapp-sample &' //go-full-pipeline >>pipeline-name
+            }
+        }
+
+
+    }
+}
+
+
+=======================
+pipeline {
+    agent {
+        label {
+            label 'master'
+            customWorkspace "${JENKINS_HOME}/${BUILD_NUMBER}/"
+        }
+    }
+    environment {
+        Go111MODULE='on'
+    }
+    stages {
+        stage('Test') {
+            steps {
+                git 'https://github.com/kodekloudhub/go-webapp-sample.git'
+                sh 'go test ./...'
+            }
+        }
+    }
+}
+
+
+===================
+pipeline {
+    agent {
+        label {
+            label 'master'
+            customWorkspace "${JENKINS_HOME}/${BUILD_NUMBER}/"
+        }
+    }
+    environment {
+        Go111MODULE='on'
+    }
+    stages {
+        stage('Test') {
+            steps {
+                git 'https://github.com/kodekloudhub/go-webapp-sample.git'
+            }
+        }
+        stage('build') {
+            steps {
+                script{
+                    image = docker.build("adminturneddevops/go-webapp-sample")
+                }
+            }
+        }
+    }
+}
+
+=====================
+pipeline {
+    agent {
+        label {
+            label 'master'
+            customWorkspace "${JENKINS_HOME}/${BUILD_NUMBER}/"
+        }
+    }
+    environment {
+        Go111MODULE='on'
+    }
+    stages {
+        stage('Test') {
+            steps {
+                git 'https://github.com/kodekloudhub/go-webapp-sample.git'
+            }
+        }
+        stage('build') {
+            steps {
+                script{
+                    image = docker.build("adminturneddevops/go-webapp-sample")
+                    sh "docker run -p 8090:8000 -d adminturneddevops/go-webapp-sample"
+                }
+            }
+        }
+    }
+}
+
+
+=======================
+Create a pipeline job named node-pipeline, and make sure it is restricted to run on linux-node node.
+
+
+pipeline {
+    agent {
+       label "node01" ///build agent(machine) name
+    }
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
+}
+
+

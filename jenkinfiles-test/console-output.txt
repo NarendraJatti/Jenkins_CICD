@@ -1,0 +1,190 @@
+Started by user admin
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/go-test
+[Pipeline] {
+[Pipeline] ws
+Running in /var/lib/jenkins/2
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/kodekloudhub/go-webapp-sample.git
+ > git init /var/lib/jenkins/2 # timeout=10
+Fetching upstream changes from https://github.com/kodekloudhub/go-webapp-sample.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.25.1'
+ > git fetch --tags --force --progress -- https://github.com/kodekloudhub/go-webapp-sample.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/kodekloudhub/go-webapp-sample.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision 09b60722df9bb27580dafc7ec249fe2e805cbfbb (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 09b60722df9bb27580dafc7ec249fe2e805cbfbb # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b master 09b60722df9bb27580dafc7ec249fe2e805cbfbb # timeout=10
+Commit message: "build"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (build)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker build -t adminturneddevops/go-webapp-sample .
+Sending build context to Docker daemon  66.98MB
+
+Step 1/7 : FROM golang:latest
+latest: Pulling from library/golang
+fd0410a2d1ae: Pulling fs layer
+bf571be90f05: Pulling fs layer
+684a51896c82: Pulling fs layer
+133893c32f7c: Pulling fs layer
+d3d5e94dedf0: Pulling fs layer
+a648298ca3cb: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+d3d5e94dedf0: Waiting
+a648298ca3cb: Waiting
+4f4fb700ef54: Waiting
+133893c32f7c: Waiting
+bf571be90f05: Verifying Checksum
+bf571be90f05: Download complete
+fd0410a2d1ae: Verifying Checksum
+fd0410a2d1ae: Download complete
+684a51896c82: Verifying Checksum
+684a51896c82: Download complete
+a648298ca3cb: Verifying Checksum
+a648298ca3cb: Download complete
+4f4fb700ef54: Download complete
+133893c32f7c: Verifying Checksum
+133893c32f7c: Download complete
+d3d5e94dedf0: Verifying Checksum
+d3d5e94dedf0: Download complete
+fd0410a2d1ae: Pull complete
+bf571be90f05: Pull complete
+684a51896c82: Pull complete
+133893c32f7c: Pull complete
+d3d5e94dedf0: Pull complete
+a648298ca3cb: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:8c10f21bec412f08f73aa7b97ca5ac5f28a39d8a88030ad8a339fd0a781d72b4
+Status: Downloaded newer image for golang:latest
+ ---> 606a44533fdb
+Step 2/7 : RUN mkdir /app
+ ---> Running in 8ce849fd2b72
+Removing intermediate container 8ce849fd2b72
+ ---> 602549048615
+Step 3/7 : ADD . /app
+ ---> 19b7ff7a4862
+Step 4/7 : WORKDIR /app
+ ---> Running in e6198f467dc9
+Removing intermediate container e6198f467dc9
+ ---> 476bfca2d6ed
+Step 5/7 : RUN go build -o main .
+ ---> Running in cc60ab3a6fb3
+[91mgo: downloading github.com/labstack/echo/v4 v4.6.3
+[0m[91mgo: downloading go.uber.org/zap v1.20.0
+[0m[91mgo: downloading gopkg.in/natefinch/lumberjack.v2 v2.0.0
+[0m[91mgo: downloading gopkg.in/yaml.v2 v2.4.0
+[0m[91mgo: downloading github.com/gorilla/sessions v1.2.1
+[0m[91mgo: downloading gorm.io/gorm v1.22.5
+go: downloading github.com/swaggo/echo-swagger v1.1.4
+[0m[91mgo: downloading github.com/labstack/echo-contrib v0.11.0
+go: downloading github.com/jinzhu/configor v1.2.1
+[0m[91mgo: downloading github.com/valyala/fasttemplate v1.2.1
+[0m[91mgo: downloading gopkg.in/boj/redistore.v1 v1.0.0-20160128113310-fc113767cd6b
+[0m[91mgo: downloading gorm.io/driver/mysql v1.2.3
+[0m[91mgo: downloading gorm.io/driver/postgres v1.2.3
+[0m[91mgo: downloading gorm.io/driver/sqlite v1.2.6
+[0m[91mgo: downloading github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+[0m[91mgo: downloading github.com/swaggo/swag v1.7.8
+[0m[91mgo: downloading golang.org/x/crypto v0.0.0-20220112180741-5e0467b6c7ce
+[0m[91mgo: downloading github.com/valyala/bytebufferpool v1.0.0
+[0m[91mgo: downloading github.com/gorilla/securecookie v1.1.1
+[0m[91mgo: downloading github.com/BurntSushi/toml v1.0.0
+[0m[91mgo: downloading github.com/go-sql-driver/mysql v1.6.0
+[0m[91mgo: downloading github.com/jackc/pgx/v4 v4.14.1
+[0m[91mgo: downloading gopkg.in/go-playground/validator.v9 v9.31.0
+[0m[91mgo: downloading github.com/garyburd/redigo v1.6.3
+[0m[91mgo: downloading github.com/mattn/go-sqlite3 v2.0.3+incompatible
+[0m[91mgo: downloading github.com/gorilla/context v1.1.1
+[0m[91mgo: downloading github.com/jinzhu/inflection v1.0.0
+[0m[91mgo: downloading github.com/jinzhu/now v1.1.4
+[0m[91mgo: downloading github.com/swaggo/files v0.0.0-20210815190702-a29dd2bc99b2
+[0m[91mgo: downloading go.uber.org/atomic v1.9.0
+[0m[91mgo: downloading go.uber.org/multierr v1.7.0
+[0m[91mgo: downloading github.com/golang-jwt/jwt v3.2.2+incompatible
+[0m[91mgo: downloading github.com/labstack/gommon v0.3.1
+[0m[91mgo: downloading golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11
+[0m[91mgo: downloading golang.org/x/net v0.0.0-20220114011407-0dd24b26b47d
+[0m[91mgo: downloading github.com/go-playground/universal-translator v0.18.0
+go: downloading github.com/leodido/go-urn v1.2.1
+[0m[91mgo: downloading github.com/mattn/go-colorable v0.1.12
+[0m[91mgo: downloading github.com/mattn/go-isatty v0.0.14
+[0m[91mgo: downloading github.com/KyleBanks/depth v1.2.1
+[0m[91mgo: downloading github.com/go-openapi/spec v0.20.4
+[0m[91mgo: downloading golang.org/x/tools v0.1.8
+[0m[91mgo: downloading github.com/jackc/pgconn v1.10.1
+[0m[91mgo: downloading github.com/jackc/pgio v1.0.0
+[0m[91mgo: downloading github.com/jackc/pgproto3/v2 v2.2.0
+[0m[91mgo: downloading github.com/jackc/pgtype v1.9.1
+[0m[91mgo: downloading golang.org/x/sys v0.0.0-20220114195835-da31bd327af9
+go: downloading github.com/go-playground/locales v0.14.0
+[0m[91mgo: downloading github.com/jackc/chunkreader/v2 v2.0.1
+[0m[91mgo: downloading github.com/jackc/pgpassfile v1.0.0
+[0m[91mgo: downloading github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b
+[0m[91mgo: downloading golang.org/x/text v0.3.7
+[0m[91mgo: downloading github.com/go-openapi/swag v0.19.15
+[0m[91mgo: downloading github.com/go-openapi/jsonpointer v0.19.5
+[0m[91mgo: downloading github.com/go-openapi/jsonreference v0.19.6
+[0m[91mgo: downloading github.com/PuerkitoBio/purell v1.1.1
+[0m[91mgo: downloading github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
+[0m[91mgo: downloading github.com/mailru/easyjson v0.7.7
+[0m[91mgo: downloading github.com/josharian/intern v1.0.0
+[0m[91m# github.com/mattn/go-sqlite3
+sqlite3-binding.c: In function 'sqlite3SelectNew':
+sqlite3-binding.c:128049:10: warning: function may return address of local variable [-Wreturn-local-addr]
+128049 |   return pNew;
+       |          ^~~~
+sqlite3-binding.c:128009:10: note: declared here
+128009 |   Select standin;
+       |          ^~~~~~~
+[0mRemoving intermediate container cc60ab3a6fb3
+ ---> e7f01afb1e57
+Step 6/7 : EXPOSE 8080
+ ---> Running in 06b876624054
+Removing intermediate container 06b876624054
+ ---> d009018e6aca
+Step 7/7 : CMD [ "/app/main" ]
+ ---> Running in 582e6627c8e9
+Removing intermediate container 582e6627c8e9
+ ---> d989873f9f35
+Successfully built d989873f9f35
+Successfully tagged adminturneddevops/go-webapp-sample:latest
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] sh
++ docker run -p 8090:8000 -d adminturneddevops/go-webapp-sample
+aeea4653d35aa38b198901256ec79cffe8203e17f0e07e51dc8eb1820f99d53e
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // ws
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

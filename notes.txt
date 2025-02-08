@@ -1,0 +1,112 @@
+
+https://www.youtube.com/watch?v=To-KzPB_EnE&t=863s>>good
+https://www.youtube.com/watch?v=g1raKOTTGb0
+
+Conitinous Integration(CI)>>packaging the codebuild
+C delivery(CD)>>mnanual intervention for deployment(for ex,codebuild manual button)> actual deployment is manual.
+C deployment(CD)>>full autiomated deplyment
+
+
+Declrative syntax jenkins pipeline>>groovy expersions(language)
+
+pipeline as codebuild
+
+pipeline stage view plugin 
+
+
+
+kodekloud
+=============
+Username: admin
+
+Password: Adm!n321
+
+UserName: mike
+
+Password: M!k3@123
+
+Username: bob
+
+Password: caleston123
+==============
+
+check jenkins in or with aws 
+jenkins cli
+==========
+jenkins-cli.jar
+java -jar jenkins-cli.jar -s http://localhost:8085 -auth 'admin:Adm!n321' <command>
+java -jar jenkins-cli.jar -s http://localhost:8085 -auth 'admin:Adm!n321' install-plugin cloudbees-bitbucket-branch-source
+java -jar jenkins-cli.jar -s http://localhost:8085 -auth 'admin:Adm!n321' install-plugin cloud-stats(f0r updating)
+java -jar jenkins-cli.jar -s http://localhost:8085 -auth 'admin:Adm!n321' disable-plugin github -restart -r
+sudo service jenkins restart
+sudo systemctl enable jenkins
+
+curl -Lv http://localhost:8085/login 2>&1 | grep -i 'x-ssh-endpoint'
+
+
+jenkins --help
+
+jenkins plugins
+===============
+check aws jenkins plugins(codebuild)
+sudo systemctl restart jenkins
+java -jar jenkins-cli.jar -s http://localhost:8085 -auth 'admin:Adm!n321' restart
+
+
+Users in jenkins
+==============
+
+Backups
+=======
+Filesystem snapshots
+plugins for Backups
+shell script that backups jenkins instance
+$JENKINS_HOME variable holds the value of Jenkins home directory, which is /var/lib/jenkins in most of the cases but nor necessarily. This is where Jenkins stores its data like jobs, plugins, configs etc
+Jenkins home directory is most important to backup, since it contains all jobs, configuration, build history, plugins etc.
+
+
+jenkins monitoring with prometheus
+==============================
+- job_name: 'Jenkins'
+  metrics_path: /prometheus/
+  static_configs:
+    - targets: ['localhost:8085']
+service prometheus restart
+
+prometheus --config.file=/etc/prometheus/prometheus.yml --test
+
+
+Jenkins file
+================
+
+
+
+Build Agent
+================
+A build agent is typically a machine, or container, which connects to a Jenkins controller and executes tasks when directed by the controller.
+Yes, we can use a docker container as well, as an agent node for a Jenkins server.
+
+
+master-slave(many nodes-join the nodes)
+
+Commonly used tools commands and their purposes in Jenkins:
+Global Tool Configuration: Jenkins allows you to configure tools globally that can be used across all jobs. You can access it via:
+
+Jenkins UI → Manage Jenkins → Global Tool Configuration. In this section, you can configure tools like JDK, Maven, Git, Node.js, Gradle, etc.
+Declarative Pipeline Syntax for tools: Jenkins pipelines (especially declarative pipelines) allow you to declare the use of certain tools within your pipeline script. This ensures that the right version of the tool is available when the build runs.
+
+Example pipeline using tools:(below is grrovy)
+pipeline {
+    agent any
+    tools {
+        jdk 'JDK11'     // Use a specific JDK installed globally in Jenkins
+        maven 'Maven3'   // Use Maven version configured in Global Tool Configuration
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean install'  // Maven will use the defined 'Maven3' tool
+            }
+        }
+    }
+}
