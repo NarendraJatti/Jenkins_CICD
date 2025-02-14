@@ -2,6 +2,21 @@ https://github.com/kodekloudhub/course-jenkins-project
 
 labels>>tags for pods/resources
 
+aws eks
+=========
+https://github.com/kodekloudhub/jenkins-project
+kubectl create namespace staging
+
+kubectl create namespace production
+
+jenkins access
+==============
+Jenkins Credentials:
+User: admin
+Password: Adm!n321
+add credentials>secretfile>config file 
+kubeconfig>>accessing k8 cluster 
+docker creds>>pushing image
 
 
 

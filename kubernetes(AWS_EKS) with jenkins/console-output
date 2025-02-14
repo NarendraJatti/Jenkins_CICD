@@ -1,0 +1,70 @@
+Started by user admin
+
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins
+ in /var/lib/jenkins/workspace/deployToProd
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of $KUBECONFIG
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] sh
++ rm -rf jenkins-project
+[Pipeline] sh
++ git clone https://github.com/kodekloudhub/jenkins-project.git
+Cloning into 'jenkins-project'...
+[Pipeline] sh
++ ls -ltr
+total 4
+drwxr-xr-x 4 jenkins jenkins 4096 Feb 14 10:38 jenkins-project
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Approval Required)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] input
+Input requested
+Approved by admin
+
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to EKS Prod env)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of $AWS_ACCESS_KEY_ID or $AWS_SECRET_ACCESS_KEY
+[Pipeline] {
+[Pipeline] sh
++ kubectl get deployment flask-app-deployment-prod -n prod -o json
+
+E0214 10:39:05.469676    5641 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://B549CFCC47CB8D3240E1F07D5DAD23F0.gr7.us-east-1.eks.amazonaws.com/api?timeout=32s\": getting credentials: decoding stdout: no kind \"ExecCredential\" is registered for version \"client.authentication.k8s.io/v1alpha1\" in scheme \"pkg/client/auth/exec/exec.go:62\""
+E0214 10:39:06.142066    5641 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://B549CFCC47CB8D3240E1F07D5DAD23F0.gr7.us-east-1.eks.amazonaws.com/api?timeout=32s\": getting credentials: decoding stdout: no kind \"ExecCredential\" is registered for version \"client.authentication.k8s.io/v1alpha1\" in scheme \"pkg/client/auth/exec/exec.go:62\""
+
+E0214 10:39:06.817350    5641 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://B549CFCC47CB8D3240E1F07D5DAD23F0.gr7.us-east-1.eks.amazonaws.com/api?timeout=32s\": getting credentials: decoding stdout: no kind \"ExecCredential\" is registered for version \"client.authentication.k8s.io/v1alpha1\" in scheme \"pkg/client/auth/exec/exec.go:62\""
+E0214 10:39:07.488208    5641 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://B549CFCC47CB8D3240E1F07D5DAD23F0.gr7.us-east-1.eks.amazonaws.com/api?timeout=32s\": getting credentials: decoding stdout: no kind \"ExecCredential\" is registered for version \"client.authentication.k8s.io/v1alpha1\" in scheme \"pkg/client/auth/exec/exec.go:62\""
+
+E0214 10:39:08.184268    5641 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://B549CFCC47CB8D3240E1F07D5DAD23F0.gr7.us-east-1.eks.amazonaws.com/api?timeout=32s\": getting credentials: decoding stdout: no kind \"ExecCredential\" is registered for version \"client.authentication.k8s.io/v1alpha1\" in scheme \"pkg/client/auth/exec/exec.go:62\""
+Unable to connect to the server: getting credentials: decoding stdout: no kind "ExecCredential" is registered for version "client.authentication.k8s.io/v1alpha1" in scheme "pkg/client/auth/exec/exec.go:62"
+[Pipeline] sh
++ kubectl apply -f jenkins-project/deployment.yaml
+
+error: error validating "jenkins-project/deployment.yaml": error validating data: failed to download openapi: Get "https://B549CFCC47CB8D3240E1F07D5DAD23F0.gr7.us-east-1.eks.amazonaws.com/openapi/v2?timeout=32s": getting credentials: decoding stdout: no kind "ExecCredential" is registered for version "client.authentication.k8s.io/v1alpha1" in scheme "pkg/client/auth/exec/exec.go:62"; if you choose to ignore these errors, turn validation off with --validate=false
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 1
+Finished: FAILURE

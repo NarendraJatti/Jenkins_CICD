@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+    environment {
+        DOCKER_IMAGE = 'your-dockerhub-username/your-app-name'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                // Build steps here
+                echo 'Building...'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Run tests
+                echo 'Running tests...'
+                sh 'pytest'
+            }
+        }
+
+        // Only deploy if running on the "main" branch
+        stage('Deploy to Production') {
+            when {
+                branch 'main' // Only execute if we're on the "main" branch
+            }
+            steps {
+                echo 'Deploying to production...'
+                // Deployment logic here
+            }
+        }
+
+        // Deploy to a staging environment for "develop" branch
+        stage('Deploy to Staging') {
+            when {
+                branch 'develop' // Only execute if we're on the "develop" branch
+            }
+            steps {
+                echo 'Deploying to staging...'
+                // Deployment logic here
+            }
+        }
+    }
+    
+    post {
+        always {
+            echo 'Pipeline execution finished!'
+        }
+    }
+}
