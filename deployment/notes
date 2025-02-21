@@ -1,0 +1,28 @@
+https://www.youtube.com/watch?v=5XBCN28uP8U
+
+Username: admin
+
+Password: Adm!n321
+
+if plugins are not present(or specific version)>>we download hpi files in jenkins update page
+and upload this downloaded plugin in jenkins console and then intall(manually)[advanced settings]
+
+sonar scanner(9000) plugin can be installed>>can be installed on the same machine(along with jenkins) also 
+sonar tokens>>secret text 
+kubeconfig file>secret file 
+credentilas in jenkins above type can be provided 
+
+maven>for build java apps
+
+jenkins projects=jenkins jobs 
+
+
+important>>use pipeline syntax featuere(in pipeline) >>to genera steps code
+
+OWASP tool for scnanning dependcy check and trivy for scaning docker images
+
+connection to server
+=================
+ssh key and prod0server-ip(set as cred-store as env variable)
+ls -lart
+credentials>global
