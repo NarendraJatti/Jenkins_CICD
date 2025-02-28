@@ -6,6 +6,23 @@ Conitinous Integration(CI)>>packaging the codebuild
 C delivery(CD)>>mnanual intervention for deployment(for ex,codebuild manual button)> actual deployment is manual.
 C deployment(CD)>>full autiomated deplyment
 
+In Jenkins, checkout refers to the process of retrieving (or checking out) the source code from a version control system (such as Git, SVN, etc.) into the Jenkins workspace, where the pipeline or job is executed.
+Jenkins uses the checkout step to pull the code so it can perform the build, test, and deployment tasks specified in the pipeline.
+If the Jenkins file is in the source code repository, why is checkout not required?
+When you create a Jenkins pipeline using a Jenkinsfile stored in your source control repository (like a Git repository), Jenkins automatically checks out the repository that contains the Jenkinsfile to execute the pipeline. Since Jenkins has already checked out the repository to read the Jenkinsfile, performing an additional checkout step in the pipeline is redundant in many cases.
+
+important>>
+whenever you install plugins restart jenkins server,
+when u update credentials in jenkins,NO00 need to restart server. 
+
+jenkins build with parameters
+====
+In Jenkins, Build with Parameters is a feature that allows you to run a Jenkins job (or pipeline) with custom inputs provided by the user. These inputs are typically defined as parameters, which can be passed to the job at runtime to modify the behavior of the build.
+Example Use Cases:
+Branch Selection: You can create a parameterized job that builds a specific branch based on user input. The parameter could be BRANCH_NAME, and the user selects the branch they want to build.
+Environment Deployment: You can define a DEPLOY_ENV parameter to choose the target environment (e.g., dev, staging, production) where the application should be deployed.
+Versioning: Users can input the application version they want to build, allowing for easier version control during testing and deployment.
+
 
 Declrative syntax jenkins pipeline>>groovy expersions(language)
 
@@ -110,3 +127,21 @@ pipeline {
         }
     }
 }
+
+important>>use docker agent
+A Docker agent in the context of Jenkins pipelines refers to a Docker container that acts as an agent (or node) to run the build jobs. Instead of running the build on a dedicated Jenkins agent machine, the build is executed within a Docker container. The docker block inside the Jenkins pipeline specifies that the build should use a Docker image as the execution environment.
+Steps to Use ECR Docker Agent Image in Jenkins Pipeline
+Once your Docker image is in ECR, you can use it in your Jenkins pipeline. Here’s how you can pull the image from ECR and use it as the Docker agent.
+
+Authenticate Jenkins to AWS ECR: You need to ensure that Jenkins can authenticate to AWS to pull Docker images from ECR. There are two common ways to do this:
+
+Option 1: IAM Role (if Jenkins is running on an EC2 instance): Assign an IAM role with the necessary ECR permissions (e.g., ecr:BatchCheckLayerAvailability, ecr:GetDownloadUrlForLayer, and ecr:DescribeRepositories) to the EC2 instance that is running Jenkins.
+
+Option 2: AWS Credentials: You can configure AWS credentials (access key and secret key) in Jenkins using the AWS Credentials Plugin.
+
+Add ECR Login Step in Jenkinsfile: In the Jenkins pipeline, use the following step to log in to ECR before pulling the Docker image.
+
+
+Built-In Node
+Mark this node temporarily offline
+This is the Jenkins controller's built-in node. Builds running on this node will execute on the same system and as the same user as the Jenkins controller. This is appropriate e.g. for special jobs performing backups, but in general you should run builds on agents. Learn more about distributed builds.

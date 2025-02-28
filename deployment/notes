@@ -1,5 +1,18 @@
 https://www.youtube.com/watch?v=5XBCN28uP8U
 
+https://www.youtube.com/watch?v=nYDBfjXgYFE>>mutibranch
+
+https://gist.github.com/cyrille-leclerc/6c46e5f800236cb324d10d9c7e8f9bb1#create-job>>jenkins-cli
+
+https://octopus.com/blog/multi-environment-deployments-jenkins#:~:text=During%20a%20deployment%20process%2C%20an,the%20artifact%20and%20deploy%20it.
+
+https://www.youtube.com/watch?v=FiI8uO7Mw1A>> multi enviroment
+
+https://codefresh.io/learn/jenkins/7-types-of-jenkins-build-parameters-with-examples/
+
+spinbot.com>>for difference checking
+
+
 Username: admin
 
 Password: Adm!n321
@@ -26,3 +39,12 @@ connection to server
 ssh key and prod0server-ip(set as cred-store as env variable)
 ls -lart
 credentials>global
+stage view >>plugin
+
+
+Poll SCM for Changes (Polling-git)
+
+multibranch pipeline>plugin 
+
+slack plugin>.notification
+slack>jenkins CI app configuration in salck app

@@ -1,0 +1,29 @@
+pipeline {
+  agent any
+  stages {
+    stage('Build Docker Image') {
+      steps {
+        script {
+          docker.withRegistry('https://<your-account-id>.dkr.ecr.<your-region>.amazonaws.com', 'aws-ecr-creds') {
+            def reactAgent = docker.build('<your-account-id>.dkr.ecr.<your-region>.amazonaws.com/react-build-agent:latest')
+            reactAgent.push()
+          }
+        }
+      }
+    }
+    stage('Use Docker Agent') {
+      agent {
+        docker {
+          image '<your-account-id>.dkr.ecr.<your-region>.amazonaws.com/react-build-agent:latest'
+          registryUrl 'https://<your-account-id>.dkr.ecr.<your-region>.amazonaws.com'
+          registryCredentialsId 'aws-ecr-creds'
+        }
+      }
+      steps {
+        // Build React app inside the Docker agent
+        sh 'npm install'
+        sh 'npm run build'
+      }
+    }
+  }
+}

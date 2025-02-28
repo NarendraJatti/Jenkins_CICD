@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Git branch to build from')
+        choice(name: 'DEPLOY_ENV', choices: ['dev', 'staging', 'prod'], description: 'Environment to deploy to')
+        booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Should we run tests?')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo "Checking out branch: ${params.BRANCH_NAME}"
+                // Checkout the specified branch
+                git branch: "${params.BRANCH_NAME}", url: 'https://github.com/your-repo/your-project.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo "Building branch ${params.BRANCH_NAME} for environment ${params.DEPLOY_ENV}"
+                // Run the build script (for example, npm install)
+                sh 'npm install'
+            }
+        }
+
+        stage('Test') {
+            when {
+                expression { return params.RUN_TESTS }
+            }
+            steps {
+                echo "Running tests..."
+                // Run test command (for example, npm test)
+                sh 'npm test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo "Deploying to environment: ${params.DEPLOY_ENV}"
+                // Deployment script based on the environment
+                sh "echo Deploying to ${params.DEPLOY_ENV} environment"
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up workspace...'
+            deleteDir()
+        }
+    }
+}
+
+
+==========
+How It Works:
+When you click on "Build with Parameters" in Jenkins, you’ll be presented with a form to fill in the parameters (BRANCH_NAME, DEPLOY_ENV, RUN_TESTS).
+You can modify the parameters dynamically before each build.
+This setup allows you to reuse the pipeline for multiple branches and environments without changing the pipeline code itself.

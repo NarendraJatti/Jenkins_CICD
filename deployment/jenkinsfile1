@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-repo.git'
+            }
+        }
+        stage('Build and Deploy') {
+            steps {
+                sh 'your-build-command'  // e.g., 'npm install' or 'mvn clean install'
+                sh 'your-deploy-command' // e.g., 'kubectl apply -f deployment.yaml'
+            }
+        }
+    }
+    triggers {
+        pollSCM('* * * * *') // Optional if using polling
+    }
+}
