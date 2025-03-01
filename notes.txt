@@ -152,6 +152,7 @@ This is the Jenkins controller's built-in node. Builds running on this node will
 
 jenkins with docker 
 ===========
+docker repo:<Username></app/repo-name>
 jenkins server should have docker credentials to login/push to dockerhub 
 using jenkins to build docker iamge and push to ECR or docker hub 
 my-app/
