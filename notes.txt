@@ -1,3 +1,6 @@
+Jenkins is both a Continuous Integration (CI) and Continuous Delivery/Deployment (CD) tool, depending on how you configure and use it
+
+
 
 https://www.youtube.com/watch?v=To-KzPB_EnE&t=863s>>good
 https://www.youtube.com/watch?v=g1raKOTTGb0
@@ -145,3 +148,65 @@ Add ECR Login Step in Jenkinsfile: In the Jenkins pipeline, use the following st
 Built-In Node
 Mark this node temporarily offline
 This is the Jenkins controller's built-in node. Builds running on this node will execute on the same system and as the same user as the Jenkins controller. This is appropriate e.g. for special jobs performing backups, but in general you should run builds on agents. Learn more about distributed builds.
+
+
+jenkins with docker 
+===========
+jenkins server should have docker credentials to login/push to dockerhub 
+using jenkins to build docker iamge and push to ECR or docker hub 
+my-app/
+├── Dockerfile
+├── package.json
+├── package-lock.json
+├── src/
+│   └── app.js
+└── .dockerignore
+Example .dockerignore:
+node_modules
+.git
+Dockerfile
+
+if Docker file is in Docker folder(not in root dir) then use 
+docker build -t my-img1 -f Docker/Dockerfile .
+my-project/
+│
+├── src/
+│   ├── index.js
+│   ├── app.js
+│   └── ... (other source files)
+│
+├── Docker/
+│   └── Dockerfile
+│
+└── package.json
+
+
+The package.json file contains all the necessary information about your application's dependencies (e.g., libraries, frameworks) and the scripts used to run or build the app.
+When you run npm install (or yarn install), Node.js uses the package.json file to know which dependencies to install.
+
+The CMD instruction sets the default command to be executed when the container runs.
+It’s helpful because it simplifies running the container. Instead of manually specifying the command each time you run the container, Docker will automatically execute the command defined in CMD.
+
+If you don't have CMD in your Dockerfile, you would need to start the container like this manually:
+docker run mynodeapp npm start
+with cmd:docker run mynodeapp
+
+
+important>>
+In the case where you define EXPOSE 8080 in the Dockerfile but specify containerPort: 3000 in the Kubernetes Pod spec, it won't cause a runtime error, but it will create a misconfiguration that could lead to the application not being accessible or reachable on the expected port.
+
+docker run -p 3000:8080 mynodeapp
+
+EXPOSE 3000
+==========
+This line simply documents that your application inside the container is expected to listen on port 3000. However, this does not force the container to listen on port 3000. It is just metadata that indicates that the application expects to receive traffic on that port.
+
+
+our Node.js application is listening on port 3000 inside the container (e.g., in your code you have app.listen(3000)).
+
+General Rule:
+The right side of -p (the container port) must match the port your application is listening on inside the container. The left side of -p (the host port) can be anything you choose, but it will map to the specific port inside the container.
+
+There is no direct docker image rename command to rename an existing Docker image. Instead, you need to tag the existing image with a new name. The docker tag command allows you to "rename" an image by assigning it a new tag.
+ 
+docker tag old-image-name:v1 new-image-name:v1 
