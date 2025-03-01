@@ -1,0 +1,23 @@
+pipeline {
+   agent {
+    docker {
+        image 'node:14-alpine'   // 1. Use Node.js Docker image with Node.js version 14 in an Alpine Linux environment.
+        label 'docker-agent'     // 2. This is optional. It specifies a Jenkins node/agent that has Docker installed.
+        args '-v /tmp:/tmp'      // 3. This is optional. It passes additional arguments to the Docker run command. In this case, it mounts the /tmp directory from the Jenkins host to the container's /tmp.
+    }
+}
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'node --version' // Runs Node.js version check inside the container
+                sh 'npm install'    // Run npm install inside the container
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'npm test'       // Run tests in the Docker container
+            }
+        }
+    }
+}

@@ -1,6 +1,6 @@
 Jenkins is both a Continuous Integration (CI) and Continuous Delivery/Deployment (CD) tool, depending on how you configure and use it
 
-
+Jenkins allows you to define your pipeline to run within a Docker container using the Docker agent. This provides an isolated environment for building, testing, and deploying applications.
 
 https://www.youtube.com/watch?v=To-KzPB_EnE&t=863s>>good
 https://www.youtube.com/watch?v=g1raKOTTGb0
@@ -8,6 +8,18 @@ https://www.youtube.com/watch?v=g1raKOTTGb0
 Conitinous Integration(CI)>>packaging the codebuild
 C delivery(CD)>>mnanual intervention for deployment(for ex,codebuild manual button)> actual deployment is manual.
 C deployment(CD)>>full autiomated deplyment
+
+In Jenkins, the behavior of subsequent stages after a failure depends on how the pipeline is configured:
+
+By default: If a stage fails, Jenkins will stop the execution of the pipeline, and no subsequent stages will run. This is the most common behavior in a typical pipeline.
+
+With post blocks: You can use the post block to define actions that should happen even after a failure, like sending notifications, archiving artifacts, or cleaning up.
+
+With catchError or try-catch: You can wrap specific stages or steps with catchError or a try-catch block to handle failures gracefully, allowing the pipeline to continue executing subsequent stages.
+
+when condition or failFast: If you use the failFast option with parallel stages, it will stop all parallel branches if one of them fails.
+
+With options { skipStagesAfterUnstable() }: If you set a stage to unstable (rather than failed), this option will skip all subsequent stages once a stage becomes unstable.
 
 In Jenkins, checkout refers to the process of retrieving (or checking out) the source code from a version control system (such as Git, SVN, etc.) into the Jenkins workspace, where the pipeline or job is executed.
 Jenkins uses the checkout step to pull the code so it can perform the build, test, and deployment tasks specified in the pipeline.
@@ -152,7 +164,7 @@ This is the Jenkins controller's built-in node. Builds running on this node will
 
 jenkins with docker 
 ===========
-docker repo:<Username></app/repo-name>
+docker repo:<Username></app/repo-name> 
 jenkins server should have docker credentials to login/push to dockerhub 
 using jenkins to build docker iamge and push to ECR or docker hub 
 my-app/
